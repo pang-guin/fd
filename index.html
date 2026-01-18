@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디지털 안전 퀘스트</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>디지털 안전 레벨업 퀘스트</h1>
+            <div class="progress-bar-container">
+                <div id="progressBar" class="progress-bar" style="width: 0%;"></div>
+            </div>
+        </header>
+
+        <section id="step0" class="step active">
+            <div class="intro-box">
+                <h2>"당신의 정보는 안전한가요?"</h2>
+                <p>일상 속에 숨겨진 개인정보의 위험을 찾고,<br>스스로를 지키는 방법을 배워봅시다.</p>
+                <button onclick="nextStep()" class="start-btn">숨은 개인정보 지키기 6단계 시작하기</button>
+            </div>
+        </section>
+
+        <section id="step1" class="step">
+            <div class="step-header">
+                <h2>STEP 1. 개인정보 식별하기</h2>
+                <p>아래 사진 속에 숨은 정보 6가지를 찾아주세요.</p>
+            </div>
+
+            <div class="checklist-box">            
+                <ul class="checklist">
+                    <li id="check-name">이름</li>
+                    <li id="check-phone">폰 번호</li>
+                    <li id="check-school">학교 이름</li>
+                    <li id="check-birth">생일</li>
+                    <li id="check-class">학년 반</li>
+                    <li id="check-adress">집 주소</li>
+
+                </ul>
+            </div>
+        
+            <div class="game-container">
+                <div class="image-wrapper">
+                    <img src="asset/image_0.png" alt="SNS 일상 사진" class="game-bg">
+                    
+                    <div class="target-area" 
+                    style="top: 46.57%; left: 80.46%; width: 7.60%; height: 3.11%;" 
+                    data-target="name"></div>
+                    <div class="target-area" 
+                    style="top: 47.21%; left: 30.52%; width: 9.53%; height: 2.47%;" 
+                    data-target="phone"></div>
+                    <div class="target-area" 
+                    style="top: 39.24%; left: 78.65%; width: 10.49%; height: 3.27%;" 
+                    data-target="school"></div>
+                    <div class="target-area" 
+                    style="top: 84.69%; left: 50.42%; width: 24.37%; height: 3.82%;" 
+                    data-target="birth"></div>
+                    <div class="target-area" 
+                    style="top: 92.82%; left: 41.38%; width: 7.36%; height: 3.51%;" 
+                    data-target="class"></div>
+                    <div class="target-area" 
+                    style="top: 42.51%; left: 20.02%; width: 17.97%; height: 3.27%;" 
+                    data-target="adress"></div>
+                   
+                </div>
+            </div>
+        </section>
+
+
+        <section id="step2" class="step">
+            <div class="step-header">
+                <h2>STEP 2. 개인정보 개념 잡기</h2>
+                <p>다음 중 <strong>'나를 알아볼 수 있는 정보(개인정보)'</strong>에 해당하는 것을 모두 찾아 눌러주세요.</p>
+            </div>
+
+            <div class="word-game-container">
+                <div class="words-wrapper">
+                    <button class="word-btn" onclick="checkWord(this, true)">내 이름</button>
+                    <button class="word-btn" onclick="checkWord(this, true)">폰 번호</button>
+                    <button class="word-btn" onclick="checkWord(this, true)">내 얼굴 사진</button>
+                    <button class="word-btn" onclick="checkWord(this, true)">성별</button> 
+                    <button class="word-btn" onclick="checkWord(this, false)">오늘 날씨</button>
+                    <button class="word-btn" onclick="checkWord(this, false)">어제 먹은 점심 메뉴</button>
+                    <button class="word-btn" onclick="checkWord(this, false)">장래희망</button> 
+                    <button class="word-btn" onclick="checkWord(this, false)">급식메뉴</button> 
+                    <button class="word-btn" onclick="checkWord(this, false)">좋아하는 색깔</button> 
+                </div>
+            </div>
+            </section>
+
+
+            <section id="step3" class="step">
+                <div class="step-header">
+                    <h2>STEP 3. 이것은 안전할까요?</h2>
+                    <p>상황을 읽고 <strong>안전하면 O</strong>, <strong>위험하면 X</strong>를 선택하세요.</p>
+                </div>
+    
+                <div class="ox-quiz-container">
+                    <div class="quiz-item" id="q1">
+                        <p class="quiz-text">1. 친구가 게임 아이템을 준다며 <strong>계정 비밀번호</strong>를 알려달라고 했다.</p>
+                        <div class="ox-btns">
+                            <button class="o-btn" onclick="checkOX(1, 'O')">O</button>
+                            <button class="x-btn" onclick="checkOX(1, 'X')">X</button>
+                        </div>
+                        <div class="quiz-feedback hidden"></div>
+                    </div>
+    
+                    <div class="quiz-item" id="q2">
+                        <p class="quiz-text">2. 모르는 사람이 보낸 이메일의 <strong>'무료 쿠폰 받기' 링크</strong>를 클릭했다.</p>
+                        <div class="ox-btns">
+                            <button class="o-btn" onclick="checkOX(2, 'O')">O</button>
+                            <button class="x-btn" onclick="checkOX(2, 'X')">X</button>
+                        </div>
+                        <div class="quiz-feedback hidden"></div>
+                    </div>
+    
+                    <div class="quiz-item" id="q3">
+                        <p class="quiz-text">3. 카페나 공공장소의 <strong>'비밀번호 없는 무료 와이파이'</strong>로 로그인을 했다.</p>
+                        <div class="ox-btns">
+                            <button class="o-btn" onclick="checkOX(3, 'O')">O</button>
+                            <button class="x-btn" onclick="checkOX(3, 'X')">X</button>
+                        </div>
+                        <div class="quiz-feedback hidden"></div>
+                    </div>
+    
+                    <div class="quiz-item" id="q4">
+                        <p class="quiz-text">4. AI 챗봇에게 고민을 털어놓으며 <strong>실명과 학교 이름</strong>을 말했다.</p>
+                        <div class="ox-btns">
+                            <button class="o-btn" onclick="checkOX(4, 'O')">O</button>
+                            <button class="x-btn" onclick="checkOX(4, 'X')">X</button>
+                        </div>
+                        <div class="quiz-feedback hidden"></div>
+                    </div>
+    
+                    <div class="quiz-item" id="q5">
+                        <p class="quiz-text">5. SNS에 <strong>내 위치 태그를 끄고</strong> 사진을 업로드했다.</p>
+                        <div class="ox-btns">
+                            <button class="o-btn" onclick="checkOX(5, 'O')">O</button>
+                            <button class="x-btn" onclick="checkOX(5, 'X')">X</button>
+                        </div>
+                        <div class="quiz-feedback hidden"></div>
+                    </div>
+                </div>
+                </section>
+    
+            <section id="bridgeSection" class="step">
+                <div class="bridge-box">
+                    <div class="icon-area">🎉</div>
+                    <h2 id="bridgeTitle">미션 성공!</h2>
+                    <p id="bridgeText">잠시 후 다음 단계로 이동합니다.</p>
+                    <button class="next-btn" onclick="proceedToNextStep()">다음 미션 도전하기 ▶</button>
+                </div>
+            </section>
+
+
+            <section id="step4" class="step">
+                <div class="step-header">
+                    <h2>STEP 4. 예방 습관 기르기</h2>
+                    <p>개인정보를 지키는 7가지 습관을 하나씩 확인하고 체크해보세요.</p>
+                </div>
+    
+                <div id="habitCardContainer" class="habit-card-container">
+                    <div class="habit-card">
+                        <div class="habit-img-box" id="habitImg">🖼️</div> <p class="habit-text" id="habitText">내용이 여기에 나옵니다.</p>
+                        <label class="habit-check-label">
+                            <input type="checkbox" id="habitCheckbox" onchange="checkHabit()">
+                            <span>지킬 수 있어요! (클릭)</span>
+                        </label>
+                    </div>
+                </div>
+    
+                <div id="habitSummary" class="habit-summary hidden">
+                    <h3>✨ 7가지 예방 수칙을 모두 모았습니다!</h3>
+                    <div class="habit-grid" id="habitGrid">
+                        </div>
+                    <p class="summary-message">"이 예방법들, 절대 잊지 마세요!"</p>
+                    </div>
+            </section>
+    
+    
+            <section id="step5" class="step">
+                <div class="step-header">
+                    <h2>STEP 5. 안전 기능 설정하기</h2>
+                    <p>왼쪽의 <strong>기능</strong>과 오른쪽의 <strong>설명</strong>을 알맞게 짝지어주세요. (클릭-클릭)</p>
+                </div>
+    
+                <div class="matching-game-container">
+                    <div class="match-col" id="matchLeftCol">
+                        </div>
+                    <div class="match-col" id="matchRightCol">
+                        </div>
+                </div>
+            </section>
+    
+    
+            <section id="step6" class="step">
+                <div class="step-header">
+                    <h2>STEP 6. 최종 마스터 퀴즈</h2>
+                    <p>지금까지 배운 내용을 8문제로 정리해봅시다.</p>
+                </div>
+    
+                <div class="final-quiz-container">
+                    <div class="quiz-status">문제 <span id="finalQuizNum">1</span> / 8</div>
+                    <div class="final-question-box">
+                        <p id="finalQuestionText" class="question-text">문제 내용</p>
+                    </div>
+                    <div class="final-options" id="finalOptions">
+                        </div>
+                </div>
+            </section>
+    
+    
+            <section id="step7" class="step">
+                <div class="ending-box">
+                    <div class="confetti">🎉</div>
+                    <h2>축하합니다!</h2>
+                    <p class="ending-msg">모든 퀘스트를 완료하고<br><strong>디지털 안전 마스터</strong>가 되셨습니다.</p>
+                    <div class="badge-box">
+                        🛡️ SAFETY MASTER
+                    </div>
+                    <p class="promise-text">"내가 지키는 개인정보,<br>오늘부터 더 안전하게 다뤄요."</p>
+                    <button class="restart-btn" onclick="location.reload()">처음부터 다시하기 🔄</button>
+                </div>
+            </section>
+
+        </div>
+
+
+
+
+
+        <script src="script.js"></script>
+    </body>
+</html>
