@@ -1,8 +1,8 @@
 /* --- 전역 변수 설정 --- */
 let currentStep = 0; 
-const totalSteps = 7; // [변경] 전체 단계 7로 수정 (엔딩 포함)
+const totalSteps = 7; 
 
-// [변경] 브릿지 메시지 추가
+// 브릿지 메시지
 const bridgeMessages = {
     1: { title: "탁월한 관찰력!", text: "게시물 하나에도 개인정보 6가지가 숨어있었어요.\n무심코 올리는 사진 한장 주의해야 해요!" },
     2: { title: "개인정보는 나를 알려주는 것", text: "이름, 얼굴, 폰 번호뿐만 아니라\n성별이나 학교처럼 조합되어 나를 알려주는 정보도 있습니다." },
@@ -13,65 +13,74 @@ const bridgeMessages = {
 }; 
 
 
-/* --- 기능 1: 브릿지 페이지 띄우기 (Alert 대신 사용) --- */
+/* --- 기능 1: 브릿지 페이지 띄우기 (1.5초 전환) --- */
 function showBridge(completedStep) {
-    // 1. 현재 단계(게임 화면) 숨기기
     const currentEl = document.getElementById(`step${completedStep}`);
-    if (currentEl) currentEl.classList.remove('active');
+    
+    // 1. 현재 단계 페이드 아웃
+    if (currentEl) currentEl.classList.add('fade-out');
 
-    // 2. 메시지 세팅
-    const msgData = bridgeMessages[completedStep] || { title: "미션 완료!", text: "다음 단계로 이동합니다." };
-    document.getElementById('bridgeTitle').innerText = msgData.title;
-    document.getElementById('bridgeText').innerText = msgData.text;
+    // [변경] 2. 1.5초(1500ms) 대기 후 전환
+    setTimeout(() => {
+        if (currentEl) currentEl.classList.remove('active', 'fade-out');
 
-    // 3. 브릿지 섹션 보여주기
-    const bridgeEl = document.getElementById('bridgeSection');
-    bridgeEl.classList.add('active');
+        const msgData = bridgeMessages[completedStep] || { title: "미션 완료!", text: "다음 단계로 이동합니다." };
+        document.getElementById('bridgeTitle').innerText = msgData.title;
+        document.getElementById('bridgeText').innerText = msgData.text;
+
+        const bridgeEl = document.getElementById('bridgeSection');
+        bridgeEl.classList.add('active');
+    }, 1500); // 1.5초 딜레이
 }
 
-/* --- 기능 2: 브릿지에서 '다음' 버튼 누르면 실제 이동 --- */
+/* --- 기능 2: 브릿지에서 '다음' 이동 (1.5초 전환) --- */
 function proceedToNextStep() {
-    // 1. 브릿지 숨기기
-    document.getElementById('bridgeSection').classList.remove('active');
+    const bridgeEl = document.getElementById('bridgeSection');
 
-    // 2. 다음 단계 번호 증가
-    currentStep++;
-    updateProgressBar();
+    // 1. 브릿지 페이드 아웃
+    bridgeEl.classList.add('fade-out');
 
-    // 3. 다음 단계 화면 보여주기
-    const nextStepEl = document.getElementById(`step${currentStep}`);
-    
-    if (nextStepEl) {
-        // 다음 단계(Step 7 포함)가 있으면 보여줌
-        nextStepEl.classList.add('active');
+    // [변경] 2. 1.5초 대기 후 다음 단계
+    setTimeout(() => {
+        bridgeEl.classList.remove('active', 'fade-out');
+
+        currentStep++;
+        updateProgressBar();
+
+        const nextStepEl = document.getElementById(`step${currentStep}`);
         
-        // 단계별 초기화 로직 실행
-        if (currentStep === 1) initStep1Game();
-        if (currentStep === 4) initStep4Habits();
-        if (currentStep === 5) initStep5Matching();
-        if (currentStep === 6) initStep6Quiz();
-        // Step 7(엔딩)은 별도 초기화 로직 없음 (CSS 애니메이션 자동 실행)
-        
-    } else {
-        // Step 7 이후(Step 8 등)로 넘어가려 할 때의 안전장치
-        console.log("모든 단계가 끝났습니다."); 
-        // 혹은 아무것도 하지 않음
-    }
+        if (nextStepEl) {
+            nextStepEl.classList.add('active');
+            
+            // 단계별 초기화 로직 실행
+            if (currentStep === 1) initStep1Game();
+            if (currentStep === 4) initStep4Habits();
+            if (currentStep === 5) initStep5Matching();
+            if (currentStep === 6) initStep6Quiz();
+        }
+    }, 1500); // 1.5초 딜레이
 }
 
-/* --- 기능 3: 최초 시작 (인트로 -> 1단계) --- */
+/* --- 기능 3: 최초 시작 (1.5초 전환) --- */
 function nextStep() {
-    // 인트로(Step 0)에서 넘어갈 때만 사용하거나, 
-    // 브릿지가 필요 없는 강제 이동 시 사용
-    document.getElementById(`step${currentStep}`).classList.remove('active');
-    currentStep++;
-    updateProgressBar();
+    const currentEl = document.getElementById(`step${currentStep}`);
     
-    const nextEl = document.getElementById(`step${currentStep}`);
-    if(nextEl) {
-        nextEl.classList.add('active');
-        if (currentStep === 1) initStep1Game();
-    }
+    // 1. 인트로 페이드 아웃
+    if (currentEl) currentEl.classList.add('fade-out');
+
+    // [변경] 2. 1.5초 대기 후 Step 1 시작
+    setTimeout(() => {
+        if (currentEl) currentEl.classList.remove('active', 'fade-out');
+        
+        currentStep++;
+        updateProgressBar();
+        
+        const nextEl = document.getElementById(`step${currentStep}`);
+        if(nextEl) {
+            nextEl.classList.add('active');
+            if (currentStep === 1) initStep1Game();
+        }
+    }, 1500); // 1.5초 딜레이
 }
 
 function updateProgressBar() {
@@ -109,7 +118,6 @@ function initStep1Game() {
             const countSpan = document.getElementById('foundCount');
             if(countSpan) countSpan.innerText = foundItems;
 
-            // [변경점] 6개 다 찾으면 -> showBridge(1) 호출
             if (foundItems >= totalItemsToFind) {
                 setTimeout(() => {
                     showBridge(1); 
@@ -122,7 +130,7 @@ function initStep1Game() {
 
 /* --- STEP 2 로직 --- */
 let foundWordsCount = 0;
-const totalWordsToFind = 4; // 내 이름, 폰 번호, 얼굴 사진, 성별
+const totalWordsToFind = 4;
 
 function checkWord(btn, isCorrect) {
     if (isCorrect) {
@@ -131,7 +139,6 @@ function checkWord(btn, isCorrect) {
         btn.classList.add('correct-active');
         foundWordsCount++;
 
-        // [변경점] 4개 다 찾으면 -> showBridge(2) 호출
         if (foundWordsCount === totalWordsToFind) {
             setTimeout(() => {
                 showBridge(2);
@@ -140,7 +147,7 @@ function checkWord(btn, isCorrect) {
     } else {
         btn.classList.add('wrong-shrink');
         setTimeout(() => {
-            alert("아니에요! 나를 구별하는 정보를 찾아요!"); // 오답은 간단한 경고
+            alert("아니에요! 나를 구별하는 정보를 찾아요!");
             btn.classList.remove('wrong-shrink');
         }, 300);
     }
@@ -150,11 +157,11 @@ function checkWord(btn, isCorrect) {
 /* --- STEP 3 로직 (OX 퀴즈) --- */
 const oxAnswers = { 1: 'X', 2: 'X', 3: 'X', 4: 'X', 5: 'O' };
 const oxExplanations = {
-    1: "계정 비밀번호는 절대로 공유하면 안 돼요!",
+    1: "계정 비밀번호는 누구에게도도 절대로 공유하면 안 돼요!",
     2: "출처 불분명 링크는 스미싱 위험이 큽니다.",
-    3: "공공 와이파이는 해킹 위험이 있어 중요 정보 입력 금지!",
+    3: "생성형 AI에 제공하는 데이터는 학습에 사용될 수 있어요!",
     4: "AI 학습 데이터로 남을 수 있으니 실명 입력 주의!",
-    5: "위치 태그 끄기는 훌륭한 보안 습관입니다."
+    5: "개인정보가 담기지 않았는지 검토! 공개범위 설정도 필수"
 };
 
 let solvedQuizCount = 0;
@@ -185,15 +192,14 @@ function checkOX(qNum, userChoice) {
 
     solvedQuizCount++;
     
-    // [변경점] 5문제 다 풀면 -> showBridge(3) 호출
     if (solvedQuizCount === totalQuizCount) {
         setTimeout(() => {
             showBridge(3);
-        }, 1000); // 해설 읽을 시간 1초 부여
+        }, 1000);
     }
 }
 
-/* --- STEP 4: 예방 습관 (시퀀스 카드) --- */
+/* --- STEP 4: 예방 습관 (코드 정리 및 오류 수정) --- */
 const habits = [
     { icon: "🔒", text: "1. 비밀번호는 어렵게 설정하고 정기적으로 교체하기" },
     { icon: "🚫", text: "2. SNS, 댓글 등에 개인정보 절대 공개하지 않기" },
@@ -204,21 +210,40 @@ const habits = [
     { icon: "📩", text: "7. 출처를 모르는 메시지나 이메일 링크는 절대 열지 않기" }
 ];
 let habitIndex = 0;
+let isHabitProcessing = false;
 
 function initStep4Habits() {
     habitIndex = 0;
+    isHabitProcessing = false;
+    
+    // 화면 강제 초기화
+    const container = document.getElementById('habitCardContainer');
+    const summary = document.getElementById('habitSummary');
+    
+    container.classList.remove('hidden', 'fade-out');
+    summary.classList.add('hidden', 'fade-out');
+    
     renderHabitCard();
 }
 
 function renderHabitCard() {
-    // 7개 다 보면 요약 화면으로
+    // DOM 요소 가져오기
+    const container = document.getElementById('habitCardContainer');
+    const summaryBox = document.getElementById('habitSummary');
+    const grid = document.getElementById('habitGrid');
+
+    // [상황 1] 모든 습관(7개)을 다 본 경우 -> 요약 화면 표시
     if (habitIndex >= habits.length) {
-        document.getElementById('habitCardContainer').classList.add('hidden');
-        const summaryBox = document.getElementById('habitSummary');
-        summaryBox.classList.remove('hidden');
         
-        // 요약 그리드 생성
-        const grid = document.getElementById('habitGrid');
+        // 1. 카드 컨테이너 숨기기 (겹침 방지)
+        container.classList.add('hidden');
+        container.style.display = 'none'; 
+        
+        // 2. 요약 화면 보여주기
+        summaryBox.classList.remove('hidden');
+        summaryBox.style.display = 'block';
+        
+        // 3. 요약 그리드 생성
         grid.innerHTML = "";
         habits.forEach((h, i) => {
             grid.innerHTML += `
@@ -228,29 +253,48 @@ function renderHabitCard() {
                 </div>`;
         });
 
-        // 2초 뒤 브릿지로 이동
-        setTimeout(() => { showBridge(4); }, 2500);
-        return;
-    }
+        // 4. 2.5초 뒤 브릿지로 이동
+        setTimeout(() => {
+             showBridge(4);
+        }, 4000);
 
-    // 현재 카드 내용 표시
-    const data = habits[habitIndex];
-    document.getElementById('habitImg').innerText = data.icon;
-    document.getElementById('habitText').innerText = data.text;
-    document.getElementById('habitCheckbox').checked = false; // 체크 초기화
-    
-    // 애니메이션 리셋 (재생되도록)
-    const card = document.querySelector('.habit-card');
-    card.style.animation = 'none';
-    card.offsetHeight; /* trigger reflow */
-    card.style.animation = 'slideInRight 0.5s ease-out';
+    } 
+    // [상황 2] 아직 볼 카드가 남은 경우 -> 카드 갱신
+    else {
+        // (혹시 모를) 요약 숨김 및 카드 표시 확실히 하기
+        container.classList.remove('hidden');
+        container.style.display = 'flex';
+        summaryBox.classList.add('hidden');
+        summaryBox.style.display = 'none';
+
+        // 1. 현재 순서 데이터 가져오기
+        const data = habits[habitIndex];
+        
+        // 2. 텍스트와 아이콘 변경
+        document.getElementById('habitImg').innerText = data.icon;
+        document.getElementById('habitText').innerText = data.text;
+        
+        // 3. 체크박스 초기화
+        const checkbox = document.getElementById('habitCheckbox');
+        checkbox.checked = false;
+        
+        // 4. 애니메이션 재실행 (Reflow 기법)
+        const card = document.querySelector('.habit-card');
+        card.style.animation = 'none';
+        card.offsetHeight; // Reflow 발생
+        card.style.animation = 'slideInRight 0.5s ease-out';
+        
+        // 5. 클릭 잠금 해제
+        isHabitProcessing = false; 
+    }
 }
 
 function checkHabit() {
-    // 체크박스 클릭 시
-    habitIndex++;
-    // 약간의 딜레이 후 다음 카드로
+    if (isHabitProcessing) return;
+    isHabitProcessing = true;
+
     setTimeout(() => {
+        habitIndex++;
         renderHabitCard();
     }, 400);
 }
@@ -261,9 +305,9 @@ const matchData = [
     { id: 1, left: "2단계 인증", right: "추가 인증수단을 설정해 계정을 보호하기" },
     { id: 2, left: "저장할 데이터 관리", right: "어떤 데이터가 저장될지 직접 선택하기" },
     { id: 3, left: "데이터 자동 삭제", right: "데이터가 보관되는 기간 제한하기" },
-    { id: 4, left: "게시물 공개 대상", right: "친구부터 전체까지 공유 범위 정하기" },
+    { id: 4, left: "게시물 공개 범위", right: "친구공개부터 전체공개까지 공유 범위 정하기" },
     { id: 5, left: "정보 검토 및 마스킹", right: "사진 속 내 개인정보 가리기" },
-    { id: 6, left: "잠금 설정", right: "개인정보 파일에 비밀번호 걸기" }
+    { id: 6, left: "잠금 설정", right: "중요한 파일에는 비밀번호 걸기" }
 ];
 let selectedLeft = null;
 let selectedRight = null;
@@ -275,7 +319,6 @@ function initStep5Matching() {
     leftCol.innerHTML = "";
     rightCol.innerHTML = "";
     
-    // 왼쪽: 순서대로, 오른쪽: 랜덤 섞기
     const shuffledRight = [...matchData].sort(() => Math.random() - 0.5);
 
     matchData.forEach(item => {
@@ -300,7 +343,6 @@ function initStep5Matching() {
 function selectMatch(btn, side) {
     if (btn.classList.contains('matched')) return;
 
-    // 선택 처리
     if (side === 'left') {
         if (selectedLeft) selectedLeft.classList.remove('selected');
         selectedLeft = btn;
@@ -310,7 +352,6 @@ function selectMatch(btn, side) {
     }
     btn.classList.add('selected');
 
-    // 둘 다 선택되었으면 정답 확인
     if (selectedLeft && selectedRight) {
         checkMatch();
     }
@@ -321,7 +362,6 @@ function checkMatch() {
     const rightId = selectedRight.dataset.id;
 
     if (leftId === rightId) {
-        // 정답!
         selectedLeft.classList.add('matched');
         selectedRight.classList.add('matched');
         selectedLeft.classList.remove('selected');
@@ -334,7 +374,6 @@ function checkMatch() {
             setTimeout(() => { showBridge(5); }, 1000);
         }
     } else {
-        // 오답!
         selectedLeft.classList.add('shake');
         selectedRight.classList.add('shake');
         setTimeout(() => {
@@ -359,18 +398,15 @@ const finalQuizData = [
     { q: "2단계 인증이란 무엇인가요?", o: ["인증을 안 하는 것", "한 번만 로그인하는 것", "추가 인증으로 보안을 높이는 것"], a: 2 }
 ];
 let currentQuizIdx = 0;
-let quizScore = 0;
 
 function initStep6Quiz() {
     currentQuizIdx = 0;
-    quizScore = 0;
     renderFinalQuiz();
 }
 
 function renderFinalQuiz() {
     if (currentQuizIdx >= finalQuizData.length) {
-        // 퀴즈 종료 -> 브릿지 이동
-        showBridge(6);
+        showBridge(6); 
         return;
     }
 
@@ -385,30 +421,30 @@ function renderFinalQuiz() {
         const btn = document.createElement('div');
         btn.className = 'option-btn';
         btn.innerText = opt;
-        btn.onclick = () => checkFinalAnswer(idx, btn);
+        btn.onclick = () => checkFinalAnswer(idx, btn, data.a);
         optionsDiv.appendChild(btn);
     });
 }
 
-function checkFinalAnswer(selectedIndex, btn) {
-    const data = finalQuizData[currentQuizIdx];
-    const opts = document.querySelectorAll('.option-btn');
-    
-    // 클릭 막기
-    opts.forEach(o => o.style.pointerEvents = 'none');
-
-    if (selectedIndex === data.a) {
+function checkFinalAnswer(selectedIndex, btn, correctIndex) {
+    if (selectedIndex === correctIndex) {
         btn.classList.add('correct');
-        quizScore++;
+        btn.innerText += " (정답!)";
+        
+        const allBtns = document.querySelectorAll('.option-btn');
+        allBtns.forEach(b => b.style.pointerEvents = 'none');
+
+        setTimeout(() => {
+            currentQuizIdx++;
+            renderFinalQuiz();
+        }, 1000);
+
     } else {
+        btn.classList.add('shake');
         btn.classList.add('wrong');
-        opts[data.a].classList.add('correct'); // 정답 보여주기
+        
+        setTimeout(() => {
+            btn.classList.remove('shake');
+        }, 500);
     }
-
-    // 1초 뒤 다음 문제
-    setTimeout(() => {
-        currentQuizIdx++;
-        renderFinalQuiz();
-    }, 1000);
 }
-
