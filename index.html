@@ -17,6 +17,8 @@
 
         <section id="step0" class="step active">
             <div class="intro-box">
+                <img src="asset/logo.png" alt="숨은 개인정보 찾기 로고" class="intro-logo">
+                
                 <h2>"당신의 정보는 안전한가요?"</h2>
                 <p>일상 속에 숨겨진 개인정보의 위험을 찾고,<br>스스로를 지키는 방법을 배워봅시다.</p>
                 <button onclick="nextStep()" class="start-btn">숨은 개인정보 지키기 6단계 시작하기</button>
@@ -72,20 +74,21 @@
         <section id="step2" class="step">
             <div class="step-header">
                 <h2>STEP 2. 개인정보 개념 잡기</h2>
-                <p>다음 중 <strong>'나를 알아볼 수 있는 정보(개인정보)'</strong>에 해당하는 것을 모두 찾아 눌러주세요.</p>
+                <p>다음 중 <strong>나를 알아볼 수 있는 정보, "개인정보"</strong>에 해당하는 것을 모두 찾아 눌러주세요.</p>
             </div>
 
             <div class="word-game-container">
                 <div class="words-wrapper">
                     <button class="word-btn" onclick="checkWord(this, true)">내 이름</button>
-                    <button class="word-btn" onclick="checkWord(this, true)">폰 번호</button>
-                    <button class="word-btn" onclick="checkWord(this, true)">내 얼굴 사진</button>
-                    <button class="word-btn" onclick="checkWord(this, true)">성별</button> 
                     <button class="word-btn" onclick="checkWord(this, false)">오늘 날씨</button>
-                    <button class="word-btn" onclick="checkWord(this, false)">어제 먹은 점심 메뉴</button>
+                    <button class="word-btn" onclick="checkWord(this, true)">폰 번호</button>
                     <button class="word-btn" onclick="checkWord(this, false)">장래희망</button> 
                     <button class="word-btn" onclick="checkWord(this, false)">급식메뉴</button> 
                     <button class="word-btn" onclick="checkWord(this, false)">좋아하는 색깔</button> 
+                    <button class="word-btn" onclick="checkWord(this, true)">내 얼굴 사진</button>
+                    <button class="word-btn" onclick="checkWord(this, true)">성별</button>                     
+                    <button class="word-btn" onclick="checkWord(this, false)">어제 먹은 점심 메뉴</button>
+
                 </div>
             </div>
             </section>
@@ -99,28 +102,28 @@
     
                 <div class="ox-quiz-container">
                     <div class="quiz-item" id="q1">
-                        <p class="quiz-text">1. 친구가 게임 아이템을 준다며 <strong>계정 비밀번호</strong>를 알려달라고 했다.</p>
+                        <p class="quiz-text">1. 친구가 게임 아이템을 준다며 <strong>아이디와 비밀번호</strong>를 알려달라고 했다.</p>
                         <div class="ox-btns">
-                            <button class="o-btn" onclick="checkOX(1, 'O')">O</button>
-                            <button class="x-btn" onclick="checkOX(1, 'X')">X</button>
+                            <button class="o-btn" onclick="checkOX(1, 'O')">안전해요</button>
+                            <button class="x-btn" onclick="checkOX(1, 'X')">위험해요</button>
                         </div>
                         <div class="quiz-feedback hidden"></div>
                     </div>
     
                     <div class="quiz-item" id="q2">
-                        <p class="quiz-text">2. 모르는 사람이 보낸 이메일의 <strong>'무료 쿠폰 받기' 링크</strong>를 클릭했다.</p>
+                        <p class="quiz-text">2. 모르는 사람이 보낸 메시지의의 <strong>'무료 쿠폰 받기' 링크</strong>를 클릭했다.</p>
                         <div class="ox-btns">
-                            <button class="o-btn" onclick="checkOX(2, 'O')">O</button>
-                            <button class="x-btn" onclick="checkOX(2, 'X')">X</button>
+                            <button class="o-btn" onclick="checkOX(2, 'O')">안전해요</button>
+                            <button class="x-btn" onclick="checkOX(2, 'X')">위험해요</button>
                         </div>
                         <div class="quiz-feedback hidden"></div>
                     </div>
     
                     <div class="quiz-item" id="q3">
-                        <p class="quiz-text">3. 카페나 공공장소의 <strong>'비밀번호 없는 무료 와이파이'</strong>로 로그인을 했다.</p>
+                        <p class="quiz-text">3. 재미로 친구 얼굴사진을<strong>AI로 영상에 합성</strong>해서 나랑 친구만 봤다.</p>
                         <div class="ox-btns">
-                            <button class="o-btn" onclick="checkOX(3, 'O')">O</button>
-                            <button class="x-btn" onclick="checkOX(3, 'X')">X</button>
+                            <button class="o-btn" onclick="checkOX(3, 'O')">안전해요</button>
+                            <button class="x-btn" onclick="checkOX(3, 'X')">위험해요</button>
                         </div>
                         <div class="quiz-feedback hidden"></div>
                     </div>
@@ -128,17 +131,17 @@
                     <div class="quiz-item" id="q4">
                         <p class="quiz-text">4. AI 챗봇에게 고민을 털어놓으며 <strong>실명과 학교 이름</strong>을 말했다.</p>
                         <div class="ox-btns">
-                            <button class="o-btn" onclick="checkOX(4, 'O')">O</button>
-                            <button class="x-btn" onclick="checkOX(4, 'X')">X</button>
+                            <button class="o-btn" onclick="checkOX(4, 'O')">안전해요</button>
+                            <button class="x-btn" onclick="checkOX(4, 'X')">위험해요</button>
                         </div>
                         <div class="quiz-feedback hidden"></div>
                     </div>
     
                     <div class="quiz-item" id="q5">
-                        <p class="quiz-text">5. SNS에 <strong>내 위치 태그를 끄고</strong> 사진을 업로드했다.</p>
+                        <p class="quiz-text">5. SNS에 <strong>친구 공개로 설정하고</strong>사진을 업로드했다.</p>
                         <div class="ox-btns">
-                            <button class="o-btn" onclick="checkOX(5, 'O')">O</button>
-                            <button class="x-btn" onclick="checkOX(5, 'X')">X</button>
+                            <button class="o-btn" onclick="checkOX(5, 'O')">안전해요</button>
+                            <button class="x-btn" onclick="checkOX(5, 'X')">위험해요</button>
                         </div>
                         <div class="quiz-feedback hidden"></div>
                     </div>
