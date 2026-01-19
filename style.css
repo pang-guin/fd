@@ -1,15 +1,26 @@
+@font-face {
+    font-family: 'BMHANNAAir';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 /* 기본 설정 */
 * { box-sizing: border-box; }
+
 body {
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'BMHANNAAir', sans-serif;
+    font-size: 1.1rem;
     margin: 0;
     padding: 20px;
-    background-color: #f4f7f6;
+    background-color: #e4d8ec;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
+
+
 .container {
     background-color: #fff;
     padding: 30px;
@@ -57,6 +68,24 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
 }
 .start-btn:hover { background-color: #0056b3; }
 
+/* --- 메인 로고 스타일 --- */
+.intro-logo {
+    display: block;       /* 블록 요소로 변경하여 중앙 정렬 가능하게 함 */
+    width: 100%;          /* 반응형: 부모 너비에 맞춤 */
+    max-width: 220px;     /* 너무 커지지 않도록 최대 너비 제한 (적절히 조절 가능) */
+    height: auto;         /* 비율 유지 */
+    margin: 0 auto 20px auto; /* 상우하좌: 아래쪽 여백 20px, 좌우 중앙 정렬 */
+    animation: floatLogo 3s ease-in-out infinite; /* 둥둥 떠다니는 효과 (선택사항) */
+}
+
+/* (선택사항) 로고가 둥둥 떠다니는 애니메이션 */
+@keyframes floatLogo {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0); }
+}
+
+
 /* 섹션 2: 숨은 그림 찾기 게임 */
 .step-header { margin-bottom: 20px; }
 .step-header h2 { color: #333; }
@@ -68,21 +97,20 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
     width: 100%;
     max-width: 400px; /* 이미지 크기 조절 */
 }
-.game-bg { width: 100%; height: auto; border-radius: 10px; display: block; }
+.game-bg { width: 100%; height: auto; border-radius: 1px; display: block; }
 
 /* 클릭 타겟 영역 및 정답 표시 */
 .target-area {
     position: absolute;
     /* background-color: rgba(255, 0, 0, 0.2);  디버깅용 (위치 확인할 때 주석 해제) */
     cursor: pointer;
-    border-radius: 50%; /* 기본적으로 약간 둥글게 */
 }
 /* 찾았을 때 표시되는 빨간 동그라미 */
 .target-area.found::after {
     content: '';
     position: absolute;
     top: -5px; left: -5px; right: -5px; bottom: -5px;
-    border: 3px solid #ff3b3b;
+    border: 2px solid #ff3b3b;
     border-radius: 50%; /* 타원형 테두리 */
     animation: pulse 1.5s infinite;
     box-shadow: 0 0 10px #ff3b3b;
@@ -95,7 +123,7 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
 
 /* 체크리스트 스타일 */
 .checklist-box {
-    background-color: #f8f9fa;
+    background-color: #ffffff;
     padding: 15px;
     border-radius: 10px;
     text-align: center; /* 텍스트 가운데 정렬 */
@@ -417,7 +445,12 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
     font-weight: bold;
 }
 /* 오답 흔들림 */
-.match-btn.shake { animation: shake 0.4s; border-color: #fa5252; }
+.shake { 
+    animation: shake 0.4s; 
+    border-color: #fa5252; 
+    color: #fa5252; /* 흔들릴 때 글자색도 빨갛게 */
+}
+
 @keyframes shake {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
@@ -483,4 +516,15 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
+}
+
+
+.step.fade-out {
+    animation: fadeOut 1.5s ease-in-out forwards; /* 1초 동안 사라짐 */
+    pointer-events: none; /* 사라지는 동안 클릭 방지 */
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
 }
