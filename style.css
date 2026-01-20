@@ -613,3 +613,99 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
     75% { transform: scale(1.1) rotate(-15deg); }
     100% { transform: scale(1) rotate(0deg); }
 }
+
+모바일 환경(스마트폰)에서 화면이 깨지거나 밀리지 않도록 하려면 **반응형 CSS (Media Query)**가 필요합니다.
+
+이미 작성하신 style.css 파일의 가장 아래쪽에 다음 코드를 복사해서 붙여넣으세요. 이 코드는 화면 폭이 좁은 모바일 기기(600px 이하)에서 디자인을 자동으로 조정해 줍니다.
+
+📱 style.css 맨 아래에 추가할 코드
+CSS
+
+
+@media screen and (max-width: 600px) {
+
+    /* 1. 전체 레이아웃 여백 줄이기 */
+    body {
+        padding: 10px; /* 전체 여백 축소 */
+    }
+    .container {
+        padding: 20px 15px; /* 내부 여백 축소 */
+        width: 100%;
+    }
+    header h1 {
+        font-size: 1.2rem; /* 제목 크기 조금 줄임 */
+    }
+
+    /* 2. 버튼 및 텍스트 크기 조정 */
+    .start-btn {
+        width: 100%; /* 시작 버튼 꽉 차게 */
+        padding: 15px 0;
+    }
+    p {
+        font-size: 1rem; /* 본문 글자 크기 조정 */
+        word-break: keep-all; /* 단어 단위 줄바꿈 (읽기 편하게) */
+    }
+
+    /* 3. STEP 1: 숨은그림찾기 & 체크리스트 */
+    .checklist {
+        gap: 5px; /* 간격 좁히기 */
+    }
+    .checklist li {
+        font-size: 0.8rem; /* 글자 줄이기 */
+        padding: 5px 8px;
+    }
+    .game-container {
+        margin: 0 -10px; /* 이미지를 조금 더 넓게 쓰기 위해 음수 마진 */
+    }
+
+    /* 4. STEP 2: 단어 버튼 */
+    .word-btn {
+        padding: 10px 15px;
+        font-size: 0.95rem;
+        flex: 1 1 40%; /* 한 줄에 2개씩 꽉 차게 배치 */
+        max-width: 48%;
+    }
+
+    /* 5. STEP 3: OX 퀴즈 */
+    .ox-btns {
+        flex-direction: row; /* 가로 배치 유지하되 */
+        gap: 5px;
+    }
+    .o-btn, .x-btn {
+        padding: 12px 5px; /* 패딩 조절 */
+        font-size: 1rem;
+    }
+
+    /* 6. STEP 4: 예방 습관 카드 */
+    .habit-card {
+        width: 100%; /* 카드 너비 화면에 맞춤 */
+        padding: 20px 15px;
+    }
+    .habit-img-box {
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        font-size: 2rem;
+    }
+
+    /* 7. STEP 5: 매칭 게임 (가장 중요!) */
+    .matching-game-container {
+        gap: 10px; /* 좌우 간격 좁힘 */
+        padding: 0;
+    }
+    .match-btn {
+        font-size: 0.8rem; /* 글자 크기 축소 */
+        padding: 10px 5px; /* 패딩 축소 */
+        min-height: 50px;
+    }
+    /* 화살표 모양 유지를 위해 패딩값 미세 조정 */
+    #matchLeftCol .match-btn { padding-right: 15px; }
+    #matchRightCol .match-btn { padding-left: 15px; }
+
+    /* 8. 엔딩 뱃지 */
+    .badge-box {
+        font-size: 1.2rem;
+        padding: 10px 20px;
+    }
+}
+
