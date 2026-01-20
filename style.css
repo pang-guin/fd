@@ -43,7 +43,7 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
 }
 .progress-bar {
     height: 100%;
-    background-color: #6200ff;
+    background: linear-gradient(90deg, #8b5cf6 0%, #d946ef 100%);
     transition: width 0.5s ease-in-out;
 }
 
@@ -53,7 +53,7 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* 섹션 1: 인트로 */
-.intro-box h2 { color: #0400ff; margin-bottom: 15px; }
+.intro-box h2 { color: #6f00ff; margin-bottom: 15px; }
 .intro-box p { color: #666; line-height: 1.6; margin-bottom: 30px; }
 .start-btn {
     padding: 15px 50px;
@@ -194,15 +194,15 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
 .next-btn {
     margin-top: 25px;
     padding: 12px 25px;
-    background-color: #28a745;
+    background: linear-gradient(90deg, #0ab2d7 0%, #009336 100%);
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.1rem;
     transition: all 0.3s;
 }
-.next-btn:hover { background-color: #218838; }
+.next-btn:hover {transform: scale(1.05); }
 .next-btn.hidden { display: none; }
 
 /* --- STEP 2: 단어 고르기 게임 스타일 --- */
@@ -217,9 +217,9 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
 .word-btn {
     padding: 15px 25px;
     font-size: 1.1rem;
-    border: 2px solid #007bff;
+    border: 2px solid #d493ec;
     background-color: white;
-    color: #007bff;
+    color: #390876;
     border-radius: 30px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -232,7 +232,7 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
 
 /* 정답(개인정보) 선택 시 효과: 커짐 + 반짝임 */
 .word-btn.correct-active {
-    background-color: #007bff;
+    background: linear-gradient(90deg, #0ab2d7 0%, #170682 100%);
     color: white;
     transform: scale(1.15);
     box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
@@ -369,17 +369,34 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
     margin-bottom: 25px;
     word-break: keep-all;
 }
+/* --- 기존 디자인 + 애니메이션 기능 합치기 --- */
 .habit-check-label {
     display: block;
     cursor: pointer;
-    background-color: #007bff;
+    background: linear-gradient(90deg, #0ab2d7 0%, #9f43fb 100%);
     color: white;
     padding: 12px;
     border-radius: 10px;
-    transition: background 0.3s;
+    margin-top: 15px;
+    opacity: 0;                    
+    transform: translateY(20px);    
+    pointer-events: none;             
+    transition: all 0.1s ease-out;  
 }
-.habit-check-label:hover { background-color: #0056b3; }
-.habit-check-label input { display: none; }
+
+.habit-check-label:hover { 
+    opacity: 0.9; 
+}
+
+.habit-check-label input { 
+    display: none; 
+}
+
+.habit-check-label.visible {
+    opacity: 1;                     
+    transform: translateY(0);     
+    pointer-events: auto;         
+}
 
 /* 습관 완료 후 그리드 뷰 */
 .habit-summary { text-align: center; }
@@ -572,6 +589,12 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
     100% { transform: scale(1); }
 }
 
+#sparkling-confetti {
+    font-size: 80px;
+    animation: sparkleRotate 3s ease-in-out infinite;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+}
 
 .step.fade-out {
     animation: fadeOut 1.5s ease-in-out forwards; /* 1초 동안 사라짐 */
@@ -581,4 +604,20 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
 @keyframes fadeOut {
     from { opacity: 1; }
     to { opacity: 0; }
+}
+
+#sparkling-confetti {
+    font-size: 80px;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+    animation: sparkleRotate 2s ease-in-out infinite;
+}
+
+
+@keyframes sparkleRotate {
+    0% { transform: scale(1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(-15deg); }
+    50% { transform: scale(1.2) rotate(15deg); }
+    75% { transform: scale(1.1) rotate(-15deg); }
+    100% { transform: scale(1) rotate(0deg); }
 }
