@@ -232,10 +232,10 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
 
 /* 정답(개인정보) 선택 시 효과: 커짐 + 반짝임 */
 .word-btn.correct-active {
-    background: linear-gradient(90deg, #0ab2d7 0%, #170682 100%);
-    color: white;
+    background-color: #c6acd6;
+    color: rgb(0, 0, 0);
     transform: scale(1.15);
-    box-shadow: 0 0 15px rgba(0, 123, 255, 0.6);
+    box-shadow: 0 0 15px rgba(123, 0, 255, 0.6);
     border-color: #007bff;
     pointer-events: none; /* 다시 클릭 방지 */
 }
