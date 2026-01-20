@@ -1,15 +1,7 @@
-@font-face {
-    font-family: 'BMHANNAAir';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-}
-
 /* 기본 설정 */
-* { box-sizing: border-box; font-family: 'BMHANNAAir', sans-serif; }
+* { box-sizing: border-box; }
 
 body {
-    font-family: 'BMHANNAAir', sans-serif;
     font-size: 1.1rem;
     margin: 0;
     padding: 20px;
@@ -232,11 +224,11 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
 
 /* 정답(개인정보) 선택 시 효과: 커짐 + 반짝임 */
 .word-btn.correct-active {
-    background-color: #c6acd6;
+    background-color: #eed7fe;
     color: rgb(0, 0, 0);
     transform: scale(1.15);
-    box-shadow: 0 0 15px rgba(123, 0, 255, 0.6);
-    border-color: #007bff;
+    box-shadow: 0 0 15px rgba(254, 2, 229, 0.57);
+    border-color: #f6c6fb;
     pointer-events: none; /* 다시 클릭 방지 */
 }
 
@@ -447,7 +439,7 @@ header h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
 
 .match-btn {
     padding: 15px;
-    background: white;
+    background: ffecec;
     /* border: 2px solid ... (삭제: clip-path 사용 시 테두리는 filter로 대체) */
     /* border-radius: 10px; (삭제: 화살표는 각진 모양이 어울림) */
     
