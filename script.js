@@ -157,7 +157,7 @@ function checkWord(btn, isCorrect) {
 /* --- STEP 3 로직 (OX 퀴즈) --- */
 const oxAnswers = { 1: 'X', 2: 'X', 3: 'X', 4: 'X', 5: 'O' };
 const oxExplanations = {
-    1: "계정 비밀번호는 누구에게도도 절대로 공유하면 안 돼요!",
+    1: "계정 비밀번호는 누구에게도 절대로 공유하면 안 돼요!",
     2: "친구들과 선생님 목소리 또한 중요한 개인정보입니다! ",
     3: "생성형 AI에 제공하는 데이터는 학습에 사용될 수 있어요!",
     4: "AI 학습 데이터로 남을 수 있으니 실명 입력 주의!",
@@ -213,6 +213,7 @@ const habits = [
 
 let habitIndex = 0;
 let isHabitProcessing = false;
+let labelTimer = null;
 
 function initStep4Habits() {
     habitIndex = 0;
@@ -233,22 +234,23 @@ function renderHabitCard() {
     const container = document.getElementById('habitCardContainer');
     const summaryBox = document.getElementById('habitSummary');
     const grid = document.getElementById('habitGrid');
+    
+    // [중요] 체크 버튼 요소 가져오기
+    const checkLabel = document.querySelector('.habit-check-label');
+
+    // [중요] 이전 타이머가 돌고 있다면 취소 (빠르게 넘길 때 겹침 방지)
+    if (labelTimer) clearTimeout(labelTimer);
 
     // [상황 1] 모든 습관(7개)을 다 본 경우 -> 요약 화면 표시
     if (habitIndex >= habits.length) {
-        
-        // 1. 카드 컨테이너 숨기기 (겹침 방지)
         container.classList.add('hidden');
         container.style.display = 'none'; 
         
-        // 2. 요약 화면 보여주기
         summaryBox.classList.remove('hidden');
         summaryBox.style.display = 'block';
         
-        // 3. 요약 그리드 생성
         grid.innerHTML = "";
         habits.forEach((h) => {
-            // 수칙 번호 대신 h.summary를 출력
             grid.innerHTML += `
                 <div class="mini-habit-card">
                     <div style="font-size:1.5rem;">${h.icon}</div>
@@ -258,7 +260,6 @@ function renderHabitCard() {
                 </div>`;
         });
 
-        // 4. 2.5초 뒤 브릿지로 이동
         setTimeout(() => {
              showBridge(4);
         }, 4000);
@@ -266,7 +267,6 @@ function renderHabitCard() {
     } 
     // [상황 2] 아직 볼 카드가 남은 경우 -> 카드 갱신
     else {
-        // (혹시 모를) 요약 숨김 및 카드 표시 확실히 하기
         container.classList.remove('hidden');
         container.style.display = 'flex';
         summaryBox.classList.add('hidden');
@@ -279,11 +279,14 @@ function renderHabitCard() {
         document.getElementById('habitImg').innerText = data.icon;
         document.getElementById('habitText').innerText = data.text;
         
-        // 3. 체크박스 초기화
+        // 3. 체크박스 초기화 및 버튼 숨기기 (RESET)
         const checkbox = document.getElementById('habitCheckbox');
         checkbox.checked = false;
         
-        // 4. 애니메이션 재실행 (Reflow 기법)
+        // [중요] 버튼을 일단 안 보이게 리셋
+        checkLabel.classList.remove('visible'); 
+
+        // 4. 카드 등장 애니메이션 재실행
         const card = document.querySelector('.habit-card');
         card.style.animation = 'none';
         card.offsetHeight; // Reflow 발생
@@ -291,6 +294,11 @@ function renderHabitCard() {
         
         // 5. 클릭 잠금 해제
         isHabitProcessing = false; 
+
+        // [중요] 1초(1000ms) 뒤에 버튼 등장시키기
+        labelTimer = setTimeout(() => {
+            checkLabel.classList.add('visible');
+        }, 2000);
     }
 }
 
@@ -308,7 +316,7 @@ function checkHabit() {
 /* --- STEP 5: 안전 기능 설정 (매칭 게임) --- */
 const matchData = [
     { id: 1, left: "2단계 인증으로", right: "추가 인증수단을 설정해 계정을 보호하기" },
-    { id: 2, left: "회원 가입할때 제공하는 데이터는", right: "직접 살펴보고 동의 여부 선택하기" },
+    { id: 2, left: "회원 가입할때 이용약관은", right: "전체동의보다 하나씩 동의 여부 선택하기" },
     { id: 3, left: "데이터 자동 삭제를 설정해서", right: "데이터가 보관되는 기간 제한하기" },
     { id: 4, left: "게시물 공개 범위를 정해서", right: "친구공개부터 전체공개까지 공유 범위 정하기" },
     { id: 5, left: "영상이나 사진을 올리기 전 그 안에", right: "개인정보가 담겼는지 검토하기" },
@@ -396,8 +404,8 @@ const finalQuizData = [
     { q: "다음 중 '개인정보'가 아닌 것은?", o: ["내 이름", "오늘 날씨", "휴대폰 번호"], a: 1 },
     { q: "친구에게 아이디와 비밀번호를 알려줘도 될까?", o: ["절대 안 된다", "친하면 괜찮다", "급할 땐 된다"], a: 0 },
     { q: "출처가 불분명한 문자 링크를 받았다면?", o: ["눌러본다", "삭제하고 열지 않는다", "친구에게 보낸다"], a: 1 },
-    { q: "공용 PC나 태블릿에서 로그인할 때 안전한 행동은?", o: ["자동로그인을 설정한다.", "로그인 상태 유지 기능을 켜둔다.", "사용 후 반드시 로그아웃한다."], a: 1 },
-    { q: "SNS에 사진 올릴 때 안전한 행동은?", o: ["공개 범위를 알맞게 설정하기", "교복 이름표 보이게 하기", "집 주소 적기"], a: 0 },
+    { q: "공용 PC나 태블릿에서 로그인할 때 안전한 행동은?", o: ["자동로그인을 설정한다.", "로그인 상태 유지 기능을 켜둔다.", "사용 후 반드시 로그아웃한다."], a: 2 },
+    { q: "SNS에 사진 올릴 때 안전한 행동은?", o: ["공개 범위를 알맞게 설정하기", "교복 이름표 보이게 하기", "댓글에 폰 번호 남기기"], a: 0 },
     { q: "내 정보를 지키기 위한 올바른 비밀번호는?", o: ["123456", "생년월일", "영어+숫자+특수문자 조합"], a: 2 },
     { q: "택배 상자를 버릴 때 올바른 행동은?", o: ["그냥 버린다", "이름이나 주소가 적힌 부분을 떼서 찢어 버린다"], a: 1 },
     { q: "2단계 인증이란 무엇일까?", o: ["인증을 안 하는 것", "한 번만 로그인하는 것", "추가 인증으로 보안을 높이는 것"], a: 2 }
